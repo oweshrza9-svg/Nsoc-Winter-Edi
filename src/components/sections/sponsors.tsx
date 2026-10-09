@@ -1,16 +1,19 @@
 "use client";
 
-import * as React from "react";
 import { SPONSORS } from "@/lib/content";
 import { ExternalLink, ShieldCheck, Sparkles, Trophy } from "lucide-react";
+import * as React from "react";
+import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 const SPONSOR_ICONS = [Trophy, Sparkles, ShieldCheck];
 
 export function SponsorsSection() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  useScrollReveal(sectionRef);
   return (
-    <section className="py-20 md:py-28 relative bg-secondary/30" id="partners">
+    <section ref={sectionRef} className="py-20 md:py-28 relative bg-secondary/30" id="partners">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-16 reveal-hidden">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 text-primary text-xs font-mono uppercase tracking-wider mb-3">
             <span>Partners & Sponsors</span>
           </div>
@@ -29,7 +32,7 @@ export function SponsorsSection() {
             return (
               <div
                 key={sponsor.name}
-                className="group relative rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl p-7 flex flex-col justify-between transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1"
+                className={`group relative card-shine rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl p-7 flex flex-col justify-between transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 reveal-hidden reveal-delay-${idx + 1}`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">

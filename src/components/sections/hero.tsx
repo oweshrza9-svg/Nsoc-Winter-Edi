@@ -6,11 +6,32 @@ import gsap from "gsap";
 import { Countdown } from "@/components/countdown";
 import { SITE_DATA } from "@/lib/content";
 
+const TERMINAL_COMMAND = "npx nsoc-cli join --edition=winter-2026";
+
 export function Hero() {
   const heroRef = React.useRef<HTMLDivElement | null>(null);
   const auroraRef1 = React.useRef<HTMLDivElement | null>(null);
   const auroraRef2 = React.useRef<HTMLDivElement | null>(null);
   const auroraRef3 = React.useRef<HTMLDivElement | null>(null);
+  const [typedCommand, setTypedCommand] = React.useState("");
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
+      setTypedCommand(TERMINAL_COMMAND);
+      return;
+    }
+
+    let index = 0;
+    let timer: ReturnType<typeof setTimeout>;
+    const typeNext = () => {
+      index += 1;
+      setTypedCommand(TERMINAL_COMMAND.slice(0, index));
+      if (index < TERMINAL_COMMAND.length) timer = setTimeout(typeNext, 42);
+    };
+    timer = setTimeout(typeNext, 650);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Cursor parallax (desktop only, respects reduced-motion)
   React.useEffect(() => {
@@ -151,6 +172,8 @@ export function Hero() {
         aria-hidden="true"
       />
 
+      <div className="hero-snow" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /></div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Main Hero Copy */}
@@ -260,7 +283,7 @@ export function Hero() {
               <div className="font-mono text-xs sm:text-sm space-y-2.5 text-foreground/90">
                 <p className="text-muted-foreground flex items-center gap-2">
                   <span className="text-emerald-500">$</span>
-                  <span>npx nsoc-cli join --edition=winter-2026</span>
+                  <span className="terminal-typing" aria-label={TERMINAL_COMMAND}>{typedCommand}<span className="terminal-cursor" aria-hidden="true">▍</span></span>
                 </p>
                 <p className="text-sky-600 dark:text-sky-400">
                   ✔ Verifying applicant eligibility...

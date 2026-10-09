@@ -4,12 +4,15 @@ import * as React from "react";
 import { TIMELINE } from "@/lib/content";
 import { CalendarDays, CheckCircle2, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 export function TimelineSection() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  useScrollReveal(sectionRef);
   return (
-    <section className="py-20 md:py-28 relative" id="timeline">
+    <section ref={sectionRef} className="py-20 md:py-28 relative" id="timeline">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-16 reveal-hidden">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 text-primary text-xs font-mono uppercase tracking-wider mb-3">
             <span>Winter Schedule</span>
           </div>
@@ -30,7 +33,8 @@ export function TimelineSection() {
               <div
                 key={item.title}
                 className={cn(
-                  "relative rounded-2xl border p-6 sm:p-7 backdrop-blur-xl transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4",
+                  "relative rounded-2xl border p-6 sm:p-7 backdrop-blur-xl transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 reveal-hidden",
+                  `reveal-delay-${index + 1}`,
                   isCurrent
                     ? "border-primary/60 bg-primary/[0.06] shadow-lg shadow-sky-500/10"
                     : isCompleted

@@ -1,15 +1,18 @@
 "use client";
 
-import * as React from "react";
 import { FAQS } from "@/lib/content";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import * as React from "react";
+import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 export function FaqSection() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  useScrollReveal(sectionRef);
   return (
-    <section className="py-20 md:py-28 relative" id="faq">
+    <section ref={sectionRef} className="py-20 md:py-28 relative" id="faq">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 reveal-hidden">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 text-primary text-xs font-mono uppercase tracking-wider mb-3">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Got Questions?</span>
@@ -27,7 +30,7 @@ export function FaqSection() {
             <Accordion.Item
               key={faq.question}
               value={`item-${index}`}
-              className="rounded-2xl border border-border/80 bg-card/70 backdrop-blur-xl overflow-hidden transition-all duration-200 hover:border-primary/40 data-[state=open]:border-primary/60 data-[state=open]:shadow-md data-[state=open]:shadow-sky-500/5"
+              className={`rounded-2xl border border-border/80 bg-card/70 backdrop-blur-xl overflow-hidden transition-all duration-200 hover:border-primary/40 data-[state=open]:border-primary/60 data-[state=open]:shadow-md data-[state=open]:shadow-sky-500/5 reveal-hidden reveal-delay-${index % 4 + 1}`}
             >
               <Accordion.Header className="flex">
                 <Accordion.Trigger className="flex flex-1 items-center justify-between p-5 sm:p-6 text-left font-semibold text-foreground hover:text-primary transition-all duration-200 cursor-pointer group">
