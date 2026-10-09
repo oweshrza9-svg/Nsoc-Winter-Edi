@@ -121,7 +121,7 @@ export function Hero() {
         // Terminal card slides in from right
         .from(
           ".hero-terminal",
-          { x: 40, duration: 0.9, ease: "power2.out" },
+          { x: window.innerWidth < 1280 ? 0 : 40, duration: 0.9, ease: "power2.out" },
           "-=0.7"
         )
         // Mountain layers rise from bottom
@@ -146,7 +146,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-start lg:justify-between"
+      className="relative pt-32 pb-12 md:pt-40 md:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-start lg:justify-between"
       id="home"
     >
       {/* Deep layered aurora atmosphere */}
@@ -175,7 +175,7 @@ export function Hero() {
       <div className="hero-snow" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid min-w-0 grid-cols-1 lg:grid-cols-12 gap-y-6 gap-x-10 lg:gap-y-10 items-center">
+        <div className="grid min-w-0 grid-cols-1 lg:grid-cols-12 gap-y-4 gap-x-10 lg:gap-y-10 items-center">
           {/* Main Hero Copy */}
           <div className="min-w-0 lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
             {/* Pill Badge */}
@@ -238,7 +238,7 @@ export function Hero() {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-4 mb-10 w-full">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-4 mb-6 lg:mb-10 w-full">
               <a
                 href="#tracks"
                 className="hero-cta-primary btn-shimmer inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm sm:text-base hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-sky-500/30 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
@@ -256,14 +256,10 @@ export function Hero() {
               </a>
             </div>
 
-            {/* Live Countdown */}
-            <div className="hero-countdown min-w-0 w-full flex justify-center lg:justify-start">
-              <Countdown />
-            </div>
           </div>
 
           {/* Terminal column: beside the copy on desktop, stacked after it on mobile. */}
-          <div className="min-w-0 lg:col-span-5 flex w-full justify-center lg:items-center">
+          <div className="min-w-0 lg:col-span-5 lg:row-span-2 flex w-full justify-center lg:items-center">
             <div className="hero-terminal min-w-0 w-full max-w-md rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-2xl shadow-sky-500/10 overflow-hidden p-4 sm:p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-sky-500/15">
               {/* Terminal Header */}
               <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3">
@@ -303,6 +299,11 @@ export function Hero() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Countdown follows the terminal on mobile and sits below the copy on desktop. */}
+          <div className="hero-countdown min-w-0 w-full lg:col-span-7 flex justify-center lg:justify-start">
+            <Countdown />
           </div>
 
         </div>
