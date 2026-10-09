@@ -8,63 +8,109 @@ import { SITE_DATA } from "@/lib/content";
 
 export function Hero() {
   const heroRef = React.useRef<HTMLDivElement | null>(null);
+  const auroraRef1 = React.useRef<HTMLDivElement | null>(null);
+  const auroraRef2 = React.useRef<HTMLDivElement | null>(null);
+  const auroraRef3 = React.useRef<HTMLDivElement | null>(null);
 
+  // Cursor parallax (desktop only, respects reduced-motion)
   React.useEffect(() => {
-    // Check prefers-reduced-motion
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) return;
+    if (window.innerWidth < 1024) return; // skip on mobile
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      const dx = (clientX - cx) / cx;
+      const dy = (clientY - cy) / cy;
+
+      if (auroraRef1.current) {
+        gsap.to(auroraRef1.current, {
+          x: dx * 28,
+          y: dy * 18,
+          duration: 2.2,
+          ease: "power1.out",
+          overwrite: "auto",
+        });
+      }
+      if (auroraRef2.current) {
+        gsap.to(auroraRef2.current, {
+          x: dx * -22,
+          y: dy * -14,
+          duration: 2.8,
+          ease: "power1.out",
+          overwrite: "auto",
+        });
+      }
+      if (auroraRef3.current) {
+        gsap.to(auroraRef3.current, {
+          x: dx * 16,
+          y: dy * 22,
+          duration: 3.5,
+          ease: "power1.out",
+          overwrite: "auto",
+        });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // Cinematic entrance timeline
+  React.useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.from(".hero-badge", {
-        opacity: 0,
-        y: -15,
-        duration: 0.6,
-      })
+      // Badge slides down
+      tl.from(".hero-badge", { opacity: 0, y: -18, duration: 0.7 })
+        // Headline words stagger up with slight clip feel
         .from(
-          ".hero-title",
-          {
-            opacity: 0,
-            y: 25,
-            duration: 0.8,
-          },
+          ".hero-word",
+          { opacity: 0, y: 32, skewY: 2, stagger: 0.07, duration: 0.75 },
           "-=0.3"
         )
+        // Description fades in
         .from(
           ".hero-desc",
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.7,
-          },
+          { opacity: 0, y: 20, duration: 0.7 },
           "-=0.5"
         )
+        // CTA buttons enter with slight scale
         .from(
-          ".hero-actions",
-          {
-            opacity: 0,
-            y: 15,
-            duration: 0.6,
-          },
+          ".hero-cta-primary",
+          { opacity: 0, y: 14, scale: 0.95, duration: 0.6 },
           "-=0.4"
         )
+        .from(
+          ".hero-cta-secondary",
+          { opacity: 0, y: 14, duration: 0.55 },
+          "-=0.45"
+        )
+        // Countdown
         .from(
           ".hero-countdown",
-          {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.6,
-          },
-          "-=0.4"
+          { opacity: 0, scale: 0.96, duration: 0.6 },
+          "-=0.35"
         )
+        // Terminal card slides in from right
+        .from(
+          ".hero-terminal",
+          { opacity: 0, x: 40, duration: 0.9, ease: "power2.out" },
+          "-=0.7"
+        )
+        // Mountain layers rise from bottom
         .from(
           ".mountain-layer",
           {
             opacity: 0,
-            y: 40,
-            stagger: 0.15,
-            duration: 1.2,
+            y: 50,
+            stagger: 0.18,
+            duration: 1.4,
             ease: "power2.out",
           },
           "-=0.8"
@@ -74,19 +120,34 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
+  const headline = ["Open source,", "the way it was", "meant to be."];
+
   return (
     <section
       ref={heroRef}
       className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-between"
       id="home"
     >
-      {/* Ambient Winter Aurora Glow */}
+      {/* Deep layered aurora atmosphere */}
+      {/* Primary – large cyan orb top-left */}
       <div
-        className="aurora-glow w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] -top-32 -left-20 bg-sky-400/20 dark:bg-sky-500/15"
+        ref={auroraRef1}
+        className="aurora-glow aurora-animated w-[480px] sm:w-[700px] h-[480px] sm:h-[700px] -top-40 -left-28"
+        style={{ background: "radial-gradient(ellipse, rgba(56,189,248,0.22) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
+      {/* Secondary – indigo orb top-right */}
       <div
-        className="aurora-glow w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] top-20 -right-20 bg-indigo-400/20 dark:bg-indigo-500/15"
+        ref={auroraRef2}
+        className="aurora-glow aurora-animated-2 w-[360px] sm:w-[560px] h-[360px] sm:h-[560px] top-10 -right-24"
+        style={{ background: "radial-gradient(ellipse, rgba(99,102,241,0.18) 0%, transparent 70%)" }}
+        aria-hidden="true"
+      />
+      {/* Tertiary – teal ribbon mid-center for depth */}
+      <div
+        ref={auroraRef3}
+        className="aurora-glow aurora-animated-3 w-[280px] sm:w-[420px] h-[180px] sm:h-[260px] top-1/3 left-1/2 -translate-x-1/2"
+        style={{ background: "radial-gradient(ellipse, rgba(20,184,166,0.14) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
 
@@ -100,13 +161,47 @@ export function Hero() {
               <span>Winter Cohort 2026 · 45-Day Open Source Sprint</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12] mb-5">
-              Open source,{" "}
-              <span className="bg-gradient-to-r from-sky-600 via-sky-400 to-indigo-500 dark:from-sky-300 dark:via-sky-400 dark:to-indigo-300 bg-clip-text text-transparent">
-                the way it was meant
-              </span>{" "}
-              to be.
+            {/* Main Headline — split into words for stagger */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12] mb-5">
+              {headline.map((line, li) => (
+                <span key={li} className="block overflow-hidden">
+                  {line.split(" ").map((word, wi) => (
+                    <span
+                      key={wi}
+                      className="hero-word inline-block mr-[0.28em]"
+                      style={
+                        li === 1 && wi === 0
+                          ? {
+                              background:
+                                "linear-gradient(90deg, #0ea5e9, #38bdf8, #818cf8)",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
+                            }
+                          : li === 1 && wi === 1
+                          ? {
+                              background:
+                                "linear-gradient(90deg, #38bdf8, #818cf8, #a78bfa)",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
+                            }
+                          : li === 1 && wi === 2
+                          ? {
+                              background:
+                                "linear-gradient(90deg, #818cf8, #a78bfa)",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
+                            }
+                          : {}
+                      }
+                    >
+                      {word}
+                    </span>
+                  ))}
+                </span>
+              ))}
             </h1>
 
             {/* Official Copy */}
@@ -120,10 +215,10 @@ export function Hero() {
             </p>
 
             {/* CTAs */}
-            <div className="hero-actions flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-4 mb-10 w-full">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-4 mb-10 w-full">
               <a
                 href="#tracks"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm sm:text-base hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-sky-500/25 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="hero-cta-primary btn-shimmer inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm sm:text-base hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-sky-500/30 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <span>Explore Tracks</span>
                 <ArrowRight className="w-4 h-4" />
@@ -131,7 +226,7 @@ export function Hero() {
 
               <a
                 href="#process"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-border bg-card/70 hover:bg-card text-foreground font-medium text-sm sm:text-base transition-all duration-200 backdrop-blur-md hover:border-primary/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="hero-cta-secondary inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-border bg-card/70 hover:bg-card text-foreground font-medium text-sm sm:text-base transition-all duration-200 backdrop-blur-md hover:border-primary/40 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <Code2 className="w-4 h-4 text-sky-500" />
                 <span>How It Works</span>
@@ -146,7 +241,7 @@ export function Hero() {
 
           {/* Decorative Terminal / Code Preview Box */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-md rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-xl overflow-hidden p-4 sm:p-5">
+            <div className="hero-terminal w-full max-w-md rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-2xl shadow-sky-500/10 overflow-hidden p-4 sm:p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-sky-500/15">
               {/* Terminal Header */}
               <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3">
                 <div className="flex items-center gap-1.5">
@@ -201,19 +296,17 @@ export function Hero() {
           className="w-full h-32 sm:h-48 md:h-64 object-cover"
           preserveAspectRatio="none"
         >
-          {/* Distant Mountain Peak Layer (Soft sky blend) */}
+          {/* Distant Mountain Peak Layer */}
           <path
             className="mountain-layer fill-sky-200/40 dark:fill-sky-950/40 transition-colors duration-300"
             d="M0 280L0 120L180 50L360 140L540 30L720 120L920 40L1120 130L1280 60L1440 110L1440 280Z"
           />
-
           {/* Midground Mountain Layer */}
           <path
             className="mountain-layer fill-sky-300/35 dark:fill-[#081830] transition-colors duration-300"
             d="M0 280L0 160L220 90L420 170L640 80L840 180L1060 100L1260 170L1440 130L1440 280Z"
           />
-
-          {/* Foreground Snowy Ridge with Pine Silhouettes */}
+          {/* Foreground Snowy Ridge */}
           <path
             className="mountain-layer fill-background/90 transition-colors duration-300"
             d="M0 280L0 200L140 160L320 220L520 160L740 230L960 170L1180 220L1340 180L1440 210L1440 280Z"

@@ -8,6 +8,7 @@ import confetti from "canvas-confetti";
 import { SITE_DATA } from "@/lib/content";
 import { Mail, Send, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,6 +21,8 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 export function ContactSection() {
   const [submitted, setSubmitted] = React.useState(false);
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  useScrollReveal(sectionRef);
 
   const {
     register,
@@ -53,9 +56,21 @@ export function ContactSection() {
   };
 
   return (
-    <section className="py-20 md:py-28 relative bg-secondary/20" id="contact">
+    <section ref={sectionRef} className="py-20 md:py-28 relative bg-secondary/20 overflow-hidden" id="contact">
+      {/* Cinematic aurora finale — pulsing orbs anchored behind the form */}
+      <div
+        className="aurora-glow aurora-animated w-[420px] h-[420px] -bottom-24 -left-16 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, rgba(56,189,248,0.18) 0%, transparent 70%)" }}
+        aria-hidden="true"
+      />
+      <div
+        className="aurora-glow aurora-animated-2 w-[320px] h-[320px] -bottom-16 -right-12 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, rgba(139,92,246,0.14) 0%, transparent 70%)" }}
+        aria-hidden="true"
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-16 reveal-hidden">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 text-primary text-xs font-mono uppercase tracking-wider mb-3">
             <Mail className="w-3.5 h-3.5" />
             <span>Official Inquiries</span>
@@ -199,7 +214,7 @@ export function ContactSection() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-sky-500/20 active:scale-[0.99] disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer"
+                className="aurora-cta-ring btn-shimmer w-full py-3.5 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-sky-500/25 hover:scale-[1.015] active:scale-[0.99] disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isSubmitting ? (
                   <span>Dispatching...</span>
