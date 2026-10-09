@@ -121,7 +121,7 @@ export function Hero() {
         // Terminal card slides in from right
         .from(
           ".hero-terminal",
-          { opacity: 0, x: 40, duration: 0.9, ease: "power2.out" },
+          { x: 40, duration: 0.9, ease: "power2.out" },
           "-=0.7"
         )
         // Mountain layers rise from bottom
@@ -237,6 +237,49 @@ export function Hero() {
               </span>
             </p>
 
+            {/* Terminal stays in the hero copy flow, before the CTAs. */}
+            <div className="w-full max-w-md mb-8">
+              <div className="hero-terminal w-full rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-2xl shadow-sky-500/10 overflow-hidden p-4 sm:p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-sky-500/15">
+                {/* Terminal Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground">
+                    <Terminal className="w-3 h-3 text-sky-500" />
+                    <span>nsoc-winter-2026.sh</span>
+                  </div>
+                  <div className="w-8" />
+                </div>
+
+                {/* Terminal Code Mock */}
+                <div className="font-mono text-xs sm:text-sm space-y-2.5 text-foreground/90">
+                  <p className="text-muted-foreground flex items-center gap-2">
+                    <span className="text-emerald-500">$</span>
+                    <span className="terminal-typing" aria-label={TERMINAL_COMMAND}>{typedCommand}<span className="terminal-cursor" aria-hidden="true">▍</span></span>
+                  </p>
+                  <p className="text-sky-600 dark:text-sky-400">
+                    ✔ Verifying applicant eligibility...
+                  </p>
+                  <p className="text-foreground/80 pl-2 border-l border-sky-400/30">
+                    &gt; Cohort: Winter Edition (Oct 15 - Dec 30)
+                    <br />
+                    &gt; Status: 3,500+ Alums · Production Repos
+                    <br />
+                    &gt; Rewards: Swag, Certificate, LOR, Leaderboard
+                  </p>
+                  <div className="pt-2 flex items-center justify-between text-xs bg-sky-500/10 dark:bg-sky-500/15 p-2 rounded-lg border border-sky-500/20">
+                    <span className="text-sky-700 dark:text-sky-300 font-medium">Ready to contribute?</span>
+                    <a href="#contact" className="text-accent font-semibold hover:underline">
+                      Register now →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* CTAs */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-4 mb-10 w-full">
               <a
@@ -262,51 +305,6 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Decorative Terminal / Code Preview Box */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="hero-terminal w-full max-w-md rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-2xl shadow-sky-500/10 overflow-hidden p-4 sm:p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-sky-500/15">
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground">
-                  <Terminal className="w-3 h-3 text-sky-500" />
-                  <span>nsoc-winter-2026.sh</span>
-                </div>
-                <div className="w-8" />
-              </div>
-
-              {/* Terminal Code Mock */}
-              <div className="font-mono text-xs sm:text-sm space-y-2.5 text-foreground/90">
-                <p className="text-muted-foreground flex items-center gap-2">
-                  <span className="text-emerald-500">$</span>
-                  <span className="terminal-typing" aria-label={TERMINAL_COMMAND}>{typedCommand}<span className="terminal-cursor" aria-hidden="true">▍</span></span>
-                </p>
-                <p className="text-sky-600 dark:text-sky-400">
-                  ✔ Verifying applicant eligibility...
-                </p>
-                <p className="text-foreground/80 pl-2 border-l border-sky-400/30">
-                  &gt; Cohort: Winter Edition (Oct 15 - Dec 30)
-                  <br />
-                  &gt; Status: 3,500+ Alums · Production Repos
-                  <br />
-                  &gt; Rewards: Swag, Certificate, LOR, Leaderboard
-                </p>
-                <div className="pt-2 flex items-center justify-between text-xs bg-sky-500/10 dark:bg-sky-500/15 p-2 rounded-lg border border-sky-500/20">
-                  <span className="text-sky-700 dark:text-sky-300 font-medium">Ready to contribute?</span>
-                  <a
-                    href="#contact"
-                    className="text-accent font-semibold hover:underline"
-                  >
-                    Register now →
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
