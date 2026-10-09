@@ -146,7 +146,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-between"
+      className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-start lg:justify-between"
       id="home"
     >
       {/* Deep layered aurora atmosphere */}
@@ -175,9 +175,9 @@ export function Hero() {
       <div className="hero-snow" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="grid min-w-0 grid-cols-1 lg:grid-cols-12 gap-y-6 gap-x-10 lg:gap-y-10 items-center">
           {/* Main Hero Copy */}
-          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+          <div className="min-w-0 lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
             {/* Pill Badge */}
             <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-700 dark:text-sky-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur-md shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-accent" />
@@ -257,14 +257,14 @@ export function Hero() {
             </div>
 
             {/* Live Countdown */}
-            <div className="hero-countdown w-full flex justify-center lg:justify-start">
+            <div className="hero-countdown min-w-0 w-full flex justify-center lg:justify-start">
               <Countdown />
             </div>
           </div>
 
           {/* Terminal column: beside the copy on desktop, stacked after it on mobile. */}
-          <div className="lg:col-span-5 flex w-full justify-center lg:items-center">
-            <div className="hero-terminal w-full max-w-md rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-2xl shadow-sky-500/10 overflow-hidden p-4 sm:p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-sky-500/15">
+          <div className="min-w-0 lg:col-span-5 flex w-full justify-center lg:items-center">
+            <div className="hero-terminal min-w-0 w-full max-w-md rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xl shadow-2xl shadow-sky-500/10 overflow-hidden p-4 sm:p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-sky-500/15">
               {/* Terminal Header */}
               <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3">
                 <div className="flex items-center gap-1.5">
@@ -281,23 +281,23 @@ export function Hero() {
 
               {/* Terminal Code Mock */}
               <div className="font-mono text-xs sm:text-sm space-y-2.5 text-foreground/90">
-                <p className="text-muted-foreground flex items-center gap-2">
+                <p className="min-w-0 text-muted-foreground flex items-start gap-2">
                   <span className="text-emerald-500">$</span>
-                  <span className="terminal-typing" aria-label={TERMINAL_COMMAND}>{typedCommand}<span className="terminal-cursor" aria-hidden="true">▍</span></span>
+                  <span className="terminal-typing min-w-0 flex-1 break-words" aria-label={TERMINAL_COMMAND}>{typedCommand}<span className="terminal-cursor" aria-hidden="true">▍</span></span>
                 </p>
                 <p className="text-sky-600 dark:text-sky-400">
                   ✔ Verifying applicant eligibility...
                 </p>
-                <p className="text-foreground/80 pl-2 border-l border-sky-400/30">
+                <p className="min-w-0 break-words text-foreground/80 pl-2 border-l border-sky-400/30">
                   &gt; Cohort: Winter Edition (Oct 15 - Dec 30)
                   <br />
                   &gt; Status: 3,500+ Alums · Production Repos
                   <br />
                   &gt; Rewards: Swag, Certificate, LOR, Leaderboard
                 </p>
-                <div className="pt-2 flex items-center justify-between text-xs bg-sky-500/10 dark:bg-sky-500/15 p-2 rounded-lg border border-sky-500/20">
-                  <span className="text-sky-700 dark:text-sky-300 font-medium">Ready to contribute?</span>
-                  <a href="#contact" className="text-accent font-semibold hover:underline">
+                <div className="pt-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-xs bg-sky-500/10 dark:bg-sky-500/15 p-2 rounded-lg border border-sky-500/20">
+                  <span className="min-w-0 text-sky-700 dark:text-sky-300 font-medium">Ready to contribute?</span>
+                  <a href="#contact" className="shrink-0 whitespace-nowrap text-accent font-semibold hover:underline">
                     Register now →
                   </a>
                 </div>

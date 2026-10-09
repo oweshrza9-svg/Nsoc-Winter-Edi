@@ -85,11 +85,11 @@ export function Countdown() {
           Winter Edition Kickoff Countdown
         </span>
       </div>
-      <div className="grid grid-cols-4 gap-2 sm:gap-3">
+      <div className="grid w-full max-w-[280px] grid-cols-4 gap-1.5 sm:w-fit sm:max-w-none sm:gap-3">
         {units.map((unit) => (
           <div
             key={unit.label}
-            className="flex flex-col items-center justify-center p-2.5 sm:px-3 sm:py-2 rounded-lg border border-border/60 bg-card/60 backdrop-blur-md min-w-[58px] sm:min-w-[64px]"
+            className="flex min-w-0 flex-col items-center justify-center p-2 sm:px-3 sm:py-2 rounded-lg border border-border/60 bg-card/60 backdrop-blur-md sm:min-w-[64px]"
           >
             <span className="font-mono text-lg sm:text-2xl font-bold tracking-tight text-foreground">
               {String(unit.value).padStart(2, "0")}
